@@ -1,1 +1,1 @@
-Temporary public media for Threads API. Safe to delete.
+Temporary repo — safe to delete from GitHub (Settings → Delete).
