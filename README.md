@@ -1,36 +1,35 @@
 # threads-media-host
 
-Shared **temporary public media host** for Threads API posts.
+Shared **temporary public media host** for Threads Graph API publishing.
 
-Threads Graph API needs a public HTTPS URL so Meta can fetch images/videos (`image_url` / `video_url`). This repo is that bucket for Grok Bot–managed accounts (tipstack, coco, qbter_lab, …) — not tipstack-only.
+The Threads API needs a public HTTPS URL so Meta can fetch images/videos (`image_url` / `video_url`). This repository is a shared drop bucket for that purpose — not a permanent CDN and not tied to a single account.
 
 ## How to use
 
-1. Put media under a dated folder, e.g. `YYYY-MM-DD-<slug>/still_1x1.jpg`, `motion_5s.mp4`.
-2. Commit + push to `main`.
+1. Upload media under a dated path, e.g. `YYYY-MM-DD-<slug>/still_1x1.jpg`, `motion_5s.mp4`.
+2. Commit and push to `main`.
 3. Serve via jsDelivr (pin a commit SHA when possible):
 
 ```text
 https://cdn.jsdelivr.net/gh/zerodeg00/threads-media-host@<commit>/<path>
 ```
 
-4. After Meta has processed the post, old files can be deleted in a later cleanup — do not treat this as permanent CDN storage.
+4. After Meta has finished processing the post, older files can be deleted in a later cleanup.
 
 ## Rules
 
-- Public by necessity (Threads fetch). Prefer unguessable dated paths; do not put secrets here.
-- Prefer official product CDNs (e.g. Coupang) for product shots when available; use this repo for motion clips / social stills that need a fetchable URL.
-- Keep files small (Threads-friendly). Prefer true 1:1 stills and short ~5s mp4 (h264, yuv420p, faststart).
-- Do not commit tokens, `.env`, or private keys.
+- Public by necessity (Threads fetch). Prefer unguessable dated paths. Never commit secrets, tokens, or `.env` files.
+- Prefer official product CDNs when a usable official cut exists; use this repo for motion clips / stills that need a fetchable URL.
+- Keep files Threads-friendly: true 1:1 stills when possible; short ~5s mp4 (h264, yuv420p, `+faststart`).
+- Do not document private account handles, emails, or bot names in this repo.
 
-## Accounts
+## Layout
 
-Any of Youngdo’s Threads bots may upload here. Folder prefix by account/date to avoid collisions:
+Use account-agnostic folders so uploads do not collide:
 
-- `tipstack/…` or `YYYY-MM-DD-tipstack-…`
-- `coco/…`
-- `qbter/…`
+- `YYYY-MM-DD-<slug>/…`
+- or a short opaque prefix + date
 
 ## Cleanup
 
-Safe to prune old media after posts are live. Renamed from `tipstack-threads-media` (GitHub redirects the old name).
+Safe to prune old media after posts are live. Older clone URLs may redirect here after a rename.
